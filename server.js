@@ -1,13 +1,13 @@
 //**************required packages for the entire app***********************
-
 var express = require('express')
 var mongoose = require('mongoose')
 var logger = require('morgan')
 var bodyParser = require('body-parser')
-
+//*************************requires routes *********************************
+var catRoutes = require('./routes/cat.js')
+var ownerRoutes = require('./routes/owner.js')
 //*********************app is an instance of express **********************
 var app = express()
-
 //********************requires the models for Cat and Owner
 var Cat = require('./models/Cat.js')
 var Owner = require('./models/Owner.js')
@@ -19,10 +19,13 @@ mongoose.connect('mongodb://localhost/mongoose-relationships', function(err){
     console.log("Your server is running MongoDB(mongoose-relationships), weeee!")
 })
 
-//********************asks the app to use the packages********************
+//********************asks the app to use the middleware packages*********
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
+//******************** asks the app to use the routes ********************
+app.use('/cats', catRoutes)
+app.use('/owners', ownerRoutes)
 
 //*******************route for the home page******************************
 app.get('/', function(req,res){
