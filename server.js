@@ -13,10 +13,10 @@ var Cat = require('./models/Cat.js')
 var Owner = require('./models/Owner.js')
 
 //********************connects the app to MongoDB ***********************
-mongoose.connect('mongodb://localhost/mongoose-relationships', function(err){
+mongoose.connect('mongodb://localhost/cat_catalogue', function(err){
   if (err)
     throw err
-    console.log("Your server is running MongoDB(mongoose-relationships), weeee!")
+    console.log("Your server is running MongoDB(cat_catalogue), weeee!")
 })
 
 //********************asks the app to use the middleware packages*********
