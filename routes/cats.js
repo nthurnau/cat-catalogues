@@ -1,7 +1,6 @@
 //SETUP
 var express = require('express')
 var cat = express.Router()
-var request = require('request')
 
 //CAT ROUTES
 
@@ -17,7 +16,7 @@ cat.get('/', function(req, res){
 //Show -- shows a specific cat
 //Accessed through localhost:3000/cats/:id
 cat.get('/:id', function(req, res){
-  Cat.findOne({req.params.id}, function(err, cat){
+  Cat.findOne({_id: req.params.id}, function(err, cat){
     if(err) throw err
     res.json(cat)
   })
@@ -48,7 +47,7 @@ cat.delete('/:id', function(req, res){
   Cat.findOneAndRemove({_id: req.params.id}, function(err){
     if(err) throw err
     res.json({success: true, message: "Cat deleted."})
-  }
+  })
 })
 
 //Export so accessible to other files

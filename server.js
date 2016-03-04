@@ -4,8 +4,8 @@ var mongoose = require('mongoose')
 var logger = require('morgan')
 var bodyParser = require('body-parser')
 //*************************requires routes *********************************
-var catRoutes = require('./routes/cat.js')
-var ownerRoutes = require('./routes/owner.js')
+var catRoutes = require('./routes/cats.js')
+var ownerRoutes = require('./routes/owners.js')
 //*********************app is an instance of express **********************
 var app = express()
 //********************requires the models for Cat and Owner
