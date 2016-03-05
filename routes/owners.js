@@ -3,7 +3,34 @@ var owner = express.Router()
 var Owner = require('../models/Owner.js')
 
 //Owner Routes
-
+//****************************Owner Index************************************
+owner.get('/', function(req,res){
+  Owner.find({}, function(err, owner){
+    if (err) throw err
+    res.json(owner)
+  })
+})
+//***************************Post a New Owner********************************
+owner.post('/', function(req,res){
+  Owner.create(req.body, function(err, owner){
+    if (err) throw err
+    res.json(owner)
+  })
+})
+//***************************Update An Owner Entry ****************************
+owner.patch('/:id', function(req,res){
+  Owner.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, function(err, owner){
+    if (err) throw err
+    res.json(owner)
+  })
+})
+//***************************Delete an Owner********************************
+owner.delete('/:id', function(req,res){
+  Owner.findOneAndRemove({_id: req.params.id}, function(err){
+    if (err) throw err
+    res.json({message: "Owner annihilated!!"})
+  })
+})
 //Add a cat to an owner
 //Accessed at localhost:3000/owners/:id/cats
 owner.post('/:id/cats', function(req, res){
@@ -26,14 +53,13 @@ owner.post('/:id/cats', function(req, res){
     })
   })
 })
-
 //get a single owner with full cats references with cat objects
 //Accessed at localhost:3000/owners/:id/
 owner.get('/:id', function(req, res){
   Owner.findOne({_id: req.params.id}).populate('cats').exec(function(err, owner){ //this is query population - Mongo population
+    if (err) throw err
     res.json(owner)
   })
 })
-
 
 module.exports = owner
