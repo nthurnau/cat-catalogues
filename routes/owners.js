@@ -1,6 +1,7 @@
 var express = require('express')
 var owner = express.Router()
 var Owner = require('../models/Owner.js')
+var Cat = require('../models/Cat.js')
 
 //Owner Routes
 //****************************Owner Index************************************
