@@ -1,6 +1,7 @@
 //SETUP
 var express = require('express')
 var cat = express.Router()
+var Cat = require('../models/Cat.js')
 
 //CAT ROUTES
 
