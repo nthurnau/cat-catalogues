@@ -3,11 +3,12 @@ var express = require('express')
 var mongoose = require('mongoose')
 var logger = require('morgan')
 var bodyParser = require('body-parser')
+//*********************app is an instance of express **********************
+var app = express()
 //*************************requires routes *********************************
 var catRoutes = require('./routes/cats.js')
 var ownerRoutes = require('./routes/owners.js')
-//*********************app is an instance of express **********************
-var app = express()
+
 //********************requires the models for Cat and Owner
 var Cat = require('./models/Cat.js')
 var Owner = require('./models/Owner.js')
