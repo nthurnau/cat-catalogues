@@ -3,6 +3,7 @@ var express = require('express')
 var mongoose = require('mongoose')
 var logger = require('morgan')
 var bodyParser = require('body-parser')
+var path = require('path')
 //*********************app is an instance of express **********************
 var app = express()
 //*************************requires routes *********************************
@@ -24,15 +25,21 @@ mongoose.connect('mongodb://localhost/cat_catalogue', function(err){
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static(path.join(__dirname, 'public')))
 //******************** asks the app to use the routes ********************
 app.use('/cats', catRoutes)
 app.use('/owners', ownerRoutes)
 
 //*******************route for the home page******************************
-app.get('/', function(req,res){
-	res.send('Home!')
+// API Routes:
+app.get('/api', function(req,res){
+	res.json({message: "API Base Route. These are not the droids you are looking for."})
 })
 
+// All other GETs lead to index.html
+app.get('*', function(req,res){
+	res.sendFile(__dirname + '/app/public/index.html');
+})
 
 
 //**************tells the app to listen and connect to port 3000**********
