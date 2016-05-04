@@ -18,7 +18,7 @@ var Owner = require('./models/Owner.js')
 mongoose.connect('mongodb://localhost/cat_catalogue', function(err){
   if (err)
     throw err
-    console.log("Your server is running MongoDB(cat_catalogue), weeee!")
+    console.log("Your server is running MongoDB(cat_catalogue), meow.")
 })
 
 //********************asks the app to use the middleware packages*********
@@ -44,5 +44,5 @@ app.get('*', function(req,res){
 
 //**************tells the app to listen and connect to port 3000**********
 app.listen(3000, function(){
-  console.log("Your server is listening on port 3000, so exciting!!!!!!")
+  console.log("Your server is listening on port 3000")
 })
