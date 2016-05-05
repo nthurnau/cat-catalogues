@@ -25,7 +25,8 @@ mongoose.connect('mongodb://localhost/cat_catalogue', function(err){
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(express.static(path.join(__dirname, 'public')))
+//without the /app/public the static files don't render, like the css ones!
+app.use(express.static(path.join(__dirname, '/app/public')))
 //******************** asks the app to use the routes ********************
 app.use('/cats', catRoutes)
 app.use('/owners', ownerRoutes)
@@ -37,7 +38,7 @@ app.get('/api', function(req,res){
 })
 
 // All other GETs lead to index.html
-app.get('*', function(req,res){
+app.get('/', function(req,res){
 	res.sendFile(__dirname + '/app/public/index.html');
 })
 

@@ -3,10 +3,11 @@ var
   gutil = require('gulp-util'),
   concat = require('gulp-concat'),
   browserSync = require('browser-sync'),
-  uglify = require('gulp-uglify'),
-  uglifycss = require('gulp-uglifycss'),
+  // uglify = require('gulp-uglify'),
+  cleanCSS = require('gulp-clean-css'),
   nodemon = require('gulp-nodemon'),
-  sass = require('gulp-sass')
+  sass = require('gulp-sass'),
+  ghtmlSrc = require('gulp-html-src')
 
 
 gulp.task('sass', function(){
@@ -15,25 +16,37 @@ gulp.task('sass', function(){
     .pipe(gulp.dest('app/public-dev/css'))
 })
 
-gulp.task('minify-css', function(){
-	gulp.src('app/public-dev/css/*.css')
-		.pipe(concat('application.min.css'))
-		.pipe(uglifycss())
-		.pipe(gulp.dest('app/public/css'))
-		.pipe(browserSync.stream())
-})
+gulp.task('minify-css', function() {
+  return gulp.src('app/public-dev/css/*.css')
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('app/public/css'))
+    .pipe(browserSync.stream())
+});
 
-gulp.task('minify-js', function(){
-  gulp.scr('app/public-dev/js/*.js')
-    .pipe(concat('application.min.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('app/public/js'))
-})
+gulp.task('copy-css', function() {
+	gulp.src('./src/*.html')
+		.pipe(ghtmlSrc({ presets: 'css'}))
+		.pipe(gulp.dest('./build/'));
+});
+
+// gulp.task('minify-css', function(){
+// 	gulp.src('app/public-dev/css/*.css')
+// 		.pipe(cleanCSS())
+// 		.pipe(gulp.dest('app/public/css'))
+// 		.pipe(browserSync.stream())
+// })
+
+// gulp.task('minify-js', function(){
+//   gulp.scr('app/public-dev/js/*.js')
+//     .pipe(concat('application.min.js'))
+//     .pipe(uglify())
+//     .pipe(gulp.dest('app/public/js'))
+// })
 
 gulp.task('browser-sync', ['nodemon'], function(){
 	browserSync.init(null, {
 		proxy: 'http://localhost:3000',
-		files: ['app/public-dev/**/*.*'],
+		files: ['app/public/**/*.*'],
 		port: 7000
 	})
 })
